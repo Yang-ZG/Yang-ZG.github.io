@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yang-zg.github.io","root":"/","scheme":"Gemini","version":"7.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Git实例 什么是主分支  主分支是默认分支,当执行git clone时，克隆的就是默认分支。git init初始化时，会以master分支作为主分支，主分支可以改成其他分支。  什么是origin  origin代表远程分支，比如gitlab上保存的分支。Git作为分布式版本控制工具，本地分支与远程分支并无不同。假如远程服务器上有一个develop分支，那么在本地以origin&#x2F;develop代">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Git Example">
+<meta property="og:url" content="https://yang-zg.github.io/2020/02/21/git-example/index.html">
+<meta property="og:site_name" content="Yang Z.G.">
+<meta property="og:description" content="Git实例 什么是主分支  主分支是默认分支,当执行git clone时，克隆的就是默认分支。git init初始化时，会以master分支作为主分支，主分支可以改成其他分支。  什么是origin  origin代表远程分支，比如gitlab上保存的分支。Git作为分布式版本控制工具，本地分支与远程分支并无不同。假如远程服务器上有一个develop分支，那么在本地以origin&#x2F;develop代">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-02-21T12:38:30.000Z">
+<meta property="article:modified_time" content="2020-02-21T12:54:12.120Z">
+<meta property="article:author" content="Yang Z.G.">
+<meta property="article:tag" content="git">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://yang-zg.github.io/2020/02/21/git-example/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>Git Example | Yang Z.G.</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Yang Z.G.</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://yang-zg.github.io/2020/02/21/git-example/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Yang Z.G.">
+      <meta itemprop="description" content="Yang Z.G. 的博客">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Yang Z.G.">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Git Example
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-02-21 20:38:30 / 修改时间：20:54:12" itemprop="dateCreated datePublished" datetime="2020-02-21T20:38:30+08:00">2020-02-21</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="Git实例"><a href="#Git实例" class="headerlink" title="Git实例"></a>Git实例</h1><ol>
+<li><p>什么是主分支</p>
+<p> 主分支是<em>默认分支</em>,当执行<code>git clone</code>时，克隆的就是默认分支。<code>git init</code>初始化时，会以<strong>master</strong>分支作为主分支，主分支可以改成其他分支。</p>
+</li>
+<li><p>什么是origin</p>
+<p> <strong>origin</strong>代表远程分支，比如gitlab上保存的分支。Git作为分布式版本控制工具，本地分支与远程分支并无不同。假如远程服务器上有一个<strong>develop</strong>分支，那么在本地以<strong>origin/develop</strong>代表远程分支</p>
+</li>
+<li><p>如何创建新分支</p>
+ <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 方法一</span></span><br><span class="line">git branch branch_name</span><br><span class="line"><span class="comment"># 此方法以当前所在分支为基础来创建</span></span><br><span class="line"><span class="comment"># e.g. git branch feature/test</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 方法二</span></span><br><span class="line">git branch branch_name base_branch_name</span><br><span class="line"><span class="comment"># 此方法忽略当前所在的分支，以指定的base_branch_name为基础来创建分支</span></span><br><span class="line"><span class="comment"># e.g. git branch feature/test develop</span></span><br><span class="line"><span class="comment"># e.g. git branch feature/test origin/develop</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 方法三</span></span><br><span class="line">git checkout -b branch_name</span><br><span class="line"><span class="comment"># 此方法是一个快捷操作，创建并切换分支。checkout本是用来切换分支的，增加“-b"选项指：当分支不存在时创建，同样支持指定base_branch_name</span></span><br><span class="line"><span class="comment"># e.g. git checkout -b feature/test</span></span><br><span class="line"><span class="comment"># e.g. git checkout -b feature/test develop</span></span><br><span class="line"><span class="comment"># e.g. git checkout -b feature/test origin/develop</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>如何切换分支</p>
+ <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout branch_name</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>查看所有分支</p>
+ <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 列出本地所有分支</span></span><br><span class="line">git branch</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ol>
+<ol start="6">
+<li><p>如何删除分支</p>
+<p> 当使用gitflow工作流时，本地分支会越来越多，不用的分支可以删除</p>
+ <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 删除单个分支</span></span><br><span class="line">git branch -d branch_name</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除多个分支</span></span><br><span class="line">git branch | grep feature/ | xargs git branch -d</span><br><span class="line"><span class="comment"># git branch命令不支持管道操作，所获得的列表不能作为git branch -d的参数，所以需要使用xargs做一个辅助</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>如何提交修改</p>
+ <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 第一步：将修改进行暂存(Stage)</span></span><br><span class="line">git add ./ <span class="comment"># 添加所有本地修改</span></span><br><span class="line"><span class="comment"># 添加特定文件 git add file1 file2</span></span><br><span class="line"><span class="comment"># 添加特定文件夹下的所有文件 git add ./dir1/dir2/</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 第二步：执行commit</span></span><br><span class="line">git commit -m <span class="string">'commit message'</span></span><br><span class="line"><span class="comment"># 使用编辑器编写提交说明 git commit ,Git将自动打开默认编辑器，通常是Vim，可以自定义</span></span><br><span class="line"><span class="comment"># 在上一条提交上追加提交 git commit --amend，本次提交不会生成一条新的提交记录。应该保证每次提交都是一次完整的功能修改，当发现上次提交的内容不完整时，应该采用此种方法进行追加提交。</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>如何取消本地修改</p>
+ <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 将文件从暂存区中去除,文件的修改不会丢失</span></span><br><span class="line">git reset -- filename</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将文件(未暂存)的修改取消，文件的修改将丢失</span></span><br><span class="line">git checkout -- filename</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将所有文件(未暂存)修改取消,文件的修改将丢失</span></span><br><span class="line">git checkout -- ./</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将所有文件(包括已暂存)的修改取消，文件的修改将丢失</span></span><br><span class="line">git reset --hard HEAD</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>checkout</code>命令为什么可以用来<em>取消文件修改</em></p>
+<p> <code>checkout</code>命令翻译为”检出”，他的实际作用是将版本库中的内容拿出来放到工作区。</p>
+<p> 当执行<code>git checkout branch_name</code>时相当于把<code>brach_name</code>分支的内容拿出来放到工作区，表象就是切换了分支</p>
+<p> 当执行<code>git checkout -- filename</code>时，相当于把该文件版本库中的内容拿出来放到工作区，表象就是覆盖了该文件在工作区中的修改</p>
+</li>
+<li><p><code>rebase</code>命令什么时候用</p>
+<p><code>rebase</code>命令翻译为<em>变基</em>。我们在创建任何分支时，都有一个基分支，比如：</p>
+<p><code>git branch feature/test develop</code>创建一个<code>feature/test</code>分支，他的基分支就是<code>develop</code>。Git会记录每个分支的基分支，变基就是改变分支的基分支。变基的表象就是基分支上改动会合并到当前分支，但不会生成合并记录。所以其使用场景就是：当develop上有别人提交的新内容，并且我们需要这些新内容时，执行一次变基，这样别人提交的最新代码就会出现在当前分支上。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 第一种用法：完全变基</span></span><br><span class="line">git rebase --onto base_branch_name branch_name</span><br><span class="line"><span class="comment"># 此种不常用</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 第二种用法：通过变基获取最新代码</span></span><br><span class="line">git rebase base_branch_name</span><br><span class="line"><span class="comment"># 在向服务器推送自己的代码前，执行一遍rebase能提前知道自己的代码是否和别人的有冲突，便于提前解决冲突，当有冲突时需要手动解决冲突，然后执行：git rebase --continue</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>向服务器推送代码</p>
+<p>在使用gitflow工作流时，会经常执行<code>git push origin branch_name</code>命令。比简单的<code>git push</code>命令多了两个参数。此处之所以需要多传两个参数是因为，<code>branch_name</code>是我们本地创建的分支，服务器上没有该分支，且本地Git也并不知道本地<code>branch_name</code>与远程的哪个分支对应。所以需要显式传参。</p>
+<p>同时我们可以告诉Git，本地与远程如何对应，在第一次推送代码时执行：<code>git push -u origin branch_name</code> 或<code>git push --set-upstream origin branch_name</code>，会告诉Git，本地<code>branch_name</code>分支与<code>origin/branch_name</code>对应，之后就可以直接执行<code>git pussh</code>, 而无需显式传参。</p>
+</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/git/" rel="tag"># git</a>
+          </div>
+
+        
+
+
+        
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Git实例"><span class="nav-number">1.</span> <span class="nav-text">Git实例</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Yang Z.G.</p>
+  <div class="site-description" itemprop="description">Yang Z.G. 的博客</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">1</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Yang Z.G.</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.2.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.7.1
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
